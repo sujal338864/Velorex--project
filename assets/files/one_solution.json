@@ -1,0 +1,86 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 16",
+      "desc": "Apple iPhone 14th generation",
+      "price": 79900,
+      "color": "#33505a",
+      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone16-digitalmat-gallery-3-202409?wid=728&hei=666&fmt=p-jpg&qlt=95&.v=Y2tBd1RqSzMrd3hScm1lN290ZENDQnlVUVRHTkd5alQ5aFd0OWdSZUk0SXlLZ0xXbFByV2Vvak9rWndaamlPU3cvMldkdDlIc0lud2tjcDJ3djFCUkV2dGpWUjV5VzZtaGp2QjBiUXR3RUFJWFM4ekI5ZC9uRFBQN3lzOXp4dnA"
+    },
+    {
+      "id": 2,
+      "name": "iPhone 16 Plus",
+      "desc": "Apple iPhone 14th generation",
+      "price": 89900,
+      "color": "#33505a",
+      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone16plus-digitalmat-gallery-3-202409?wid=728&hei=666&fmt=p-jpg&qlt=95&.v=MnlDYTQ3WEQ0bGtBK01PRDByZUlBZDFla0N0Znl3UThxdjB3SW91ZDVJd0NUNk5vSVlud3J6ZHhjcGQyTUVuRG8xUkhYejcxalRvY0FPQVpMcmoxMDQvalVFTGdPUU1VQnQ4YTRLRW0yaG9VZ045emg3UjNwTmJPa0hiUW9kd3o"
+    },
+    {
+      "id": 3,
+      "name": "iPhone 16 Pro",
+      "desc": "Apple iPhone 14th generation",
+      "price": 119900,
+      "color": "#33505a",
+      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone16pro-digitalmat-gallery-2-202409?wid=728&hei=666&fmt=p-jpg&qlt=95&.v=VWJuckJvbkZqeTMwRFJZSHhSVnN1enBhZEVDYXdNalJLdkllSGFmNnBVVDBVMUIwNFV6MXNoZGhsYWgvZGlmdEJnNER5bEtzeFpoMTlNVnpVcXBTR0NDaXNCSFl3ajdkc3ZBMkZreEM2YjFMcENoQkE4dlByUzRnSkp0SGViTnk"
+    },
+    {
+      "id": 4,
+      "name": "iPhone 16 Pro Max",
+      "desc": "Apple iPhone 14th generation",
+      "price": 144900,
+      "color": "#33505a",
+      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone16promax-digitalmat-gallery-3-202409?wid=728&hei=666&fmt=p-jpg&qlt=95&.v=SVFEakZLb0txZU1GR245ZlA3VVcxa2EvQmI5ZjZseVhPSEJZVkYxZ09JdFEvL1F4bC9yWlVOdW9LS1RHSitZU3haVXN2UmVLZWxyY01GTDZmcDYxbjB2aHJVVVRvS3hUQ0EwVk8wak9Ka0ZVWlNDbkp1RGJsUU9sZ1F5N1dWaC8"
+    },
+    {
+      "id": 5,
+      "name": "Pixel 9a",
+      "desc": "Google Pixel phone 15th generation",
+      "price": 74999,
+      "color": "#00ac51",
+      "image": "https://lh3.googleusercontent.com/U7uX1PJPUuzPWGy_Q4QjJEALaZ6xHfS04XupIYDOSN8h4WAI3uQaEYUtngm9mECiejsX_4NwpT3krOiccCAbo13qNR0R3T3RXXTk=s1200-w1200-e365-rw-v0-nu"
+    },
+      {
+      "id": 6,
+      "name": "Pixel 9 Pro",
+      "desc": "Google Pixel phone 15th generation",
+      "price": 94999
+,
+      "color": "#00ac51",
+      "image": "https://lh3.googleusercontent.com/nFY3HNNy945HHKQAicVoQsfQ0gnW_k-P8g1Ejm9H75sNqP-3w7QgkjFBcPDALdPpXuUhUOEM_YG_Xm9F-s5A3uGNLqpT3-STmvs=s1200-w1200-e365-rw-v0-nu"
+    },
+      {
+      "id": 7,
+      "name": "Pixel 9 Pro XL",
+      "desc": "Google Pixel phone 15th generation",
+      "price": 114999,
+      "color": "#00ac51",
+      "image": "https://lh3.googleusercontent.com/0YltSMryjQKdrXWeh2q6V9pFbKPTWNYfPpKAT8HtQ0pWv2KAkTDBkkx2f7H08QBg9O0LUuzQ_q4vkXO6970Ngfnc1VuOJ35Zh7U=s1200-w1200-e365-rw-v0-nu"
+    },
+      {
+      "id": 8,
+      "name": "Pixel 9 Pro Fold",
+      "desc": "Google Pixel phone 15th generation",
+      "price": 172999,
+      "color": "#00ac51",
+      "image": "https://lh3.googleusercontent.com/X6tsxQxEEnYK-pMuEK-9n7AECU6UVW0SgZ6BlBaLhzjg4rWofQBF_4tUvuvM8fnvchduHxrBn2vILcjUTr3iWnJaxyatAtSw2uo=s1200-w1200-e365-rw-v0-nu"
+    },
+    
+    {
+      "id": 9,
+      "name": "M4 Macbook Air",
+      "desc": "Apple Macbook air with apple silicon A14",
+      "price": 89900,
+      "color": "#e0bfae",
+      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/macbook-air-13-digitalmat-gallery-1-202503?wid=728&hei=666&fmt=png-alpha&.v=RWZDcE1Pa2MvREpxR2hwendCZFpRa2EvQmI5ZjZseVhPSEJZVkYxZ09JdFpUdXE4MkhYYjRLTVptRHE3NGNZdHhaVXN2UmVLZWxyY01GTDZmcDYxbitZbnd2dEloRUI0QkxmQVJESllzWlN5ekw2b3VPdnZLWU14ZXc2aDkvRXI"
+    },
+    {
+      "id": 10,
+      "name": "M4 Macbook Pro",
+      "desc": "Apple Macbook air with apple silicon A14",
+      "price": 159900,
+      "color": "#544ee4",
+      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp-14-digitalmat-gallery-1-202410?wid=728&hei=666&fmt=png-alpha&.v=dmVFbEEyUXJ6Q0hEd1FjMFY3bE5FczNWK01TMHBhR0pZcm42OHQ2ODBjVVZYRUFzTnU5dXpMeUpXTHdIdkp5VDRob044alBIMUhjRGJwTW1yRE1oUG9oQ20zUjdkYWFQM0VDcG9EZ0J2dDMrNmVjbmk5c1V4VVk2VEt3TGcxekg"
+    }
+  ]
+}
