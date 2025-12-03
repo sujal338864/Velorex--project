@@ -31,4 +31,24 @@ class CategoryService {
       throw Exception('Failed to load categories');
     }
   }
+    static Future<List<Map<String, dynamic>>> getAllCoupons() async {
+    final res = await http.get(Uri.parse("$baseUrl/coupons"));
+
+    if (res.statusCode == 200) {
+      final List data = jsonDecode(res.body);
+      return data.map((e) => Map<String, dynamic>.from(e)).toList();
+    }
+
+    throw Exception("Failed to load coupons");
+  }
+//   static Future<Map<String, dynamic>?> applyCoupon(String code) async {
+//   final res = await http.get(Uri.parse("$baseUrl/coupons/apply/$code"));
+
+//   if (res.statusCode == 200) {
+//     return json.decode(res.body);
+//   }
+
+//   return null;
+// }
+
  }

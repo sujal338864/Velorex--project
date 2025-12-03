@@ -1,20 +1,19 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:one_solution/Pages/home_detail_full_page.dart';
 import 'package:one_solution/Pages/tracking_webview_page.dart';
+import 'package:one_solution/models/onesolution.dart';
 import 'package:one_solution/services/order_service.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OrderDetailsPage extends StatefulWidget {
   final int orderId;
-  final String userId; // ✅ Add this line
+  final String userId;
 
   const OrderDetailsPage({
     super.key,
     required this.orderId,
-    required this.userId, // ✅ Add this line
+    required this.userId,
   });
 
   @override
@@ -31,115 +30,33 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     _loadOrderDetails();
   }
 
-Future<void> _loadOrderDetails() async {
-  try {
-    final allOrders = await OrderService.getOrders(widget.userId); // fetch all user orders
+  Future<void> _loadOrderDetails() async {
+    try {
+      final allOrders = await OrderService.getOrders(widget.userId);
 
-    // Filter to get the one you need
-    final matchingOrder = allOrders.firstWhere(
-      (order) => order['orderId'] == widget.orderId,
-      orElse: () => {},
-    );
+      final matchingOrder = allOrders.firstWhere(
+        (order) => order['orderId'] == widget.orderId,
+        orElse: () => {},
+      );
 
-    setState(() {
-      orderDetails = matchingOrder.isNotEmpty ? matchingOrder : null;
-      loading = false;
-    });
-  } catch (e) {
-    debugPrint("❌ Failed to load order details: $e");
-    setState(() => loading = false);
+      setState(() {
+        orderDetails = matchingOrder.isNotEmpty ? matchingOrder : null;
+        loading = false;
+      });
+    } catch (e) {
+      debugPrint("❌ Failed to load order details: $e");
+      setState(() => loading = false);
+    }
   }
-}
-Future<void> _openReviewDialog(int productId) async {
-  final user = Supabase.instance.client.auth.currentUser;
-  if (user == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Please login to write review")),
-    );
-    return;
-  }
-
-  int tempRating = 0;
-  String tempComment = '';
-  String displayName = user.userMetadata?["full_name"] ?? user.email ?? "User";
-
-  await showDialog(
-    context: context,
-    builder: (ctx) => StatefulBuilder(
-      builder: (ctx, setStateDialog) => AlertDialog(
-        title: const Text("Write Review"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(5, (index) {
-                int star = index + 1;
-                return IconButton(
-                  icon: Icon(
-                    star <= tempRating ? Icons.star : Icons.star_border,
-                    color: Colors.amber,
-                  ),
-                  onPressed: () {
-                    setStateDialog(() => tempRating = star);
-                  },
-                );
-              }),
-            ),
-            TextField(
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: "Write your review",
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (v) => tempComment = v,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (tempRating == 0) return;
-
-              await RatingService.submitReview(
-                productId: productId,
-                userId: user.id,
-                userName: displayName,
-                rating: tempRating,
-                comment: tempComment.trim(),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Review submitted successfully!")),
-              );
-
-              Navigator.pop(ctx);
-            },
-            child: const Text("Submit"),
-          ),
-        ],
-      ),
-    ),
-  );
-}
 
   Future<void> _cancelOrder() async {
     try {
-      final success =
-          await OrderService.cancelOrder(widget.orderId.toString());
+      final success = await OrderService.cancelOrder(widget.orderId.toString());
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Order cancelled successfully ✅")),
         );
         _loadOrderDetails();
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to cancel order ❌")),
-        );
       }
     } catch (e) {
       debugPrint("❌ Error cancelling order: $e");
@@ -149,21 +66,27 @@ Future<void> _openReviewDialog(int productId) async {
   @override
   Widget build(BuildContext context) {
     final order = orderDetails;
+
     return Scaffold(
       backgroundColor: const Color(0xfff7f8fc),
-      appBar: AppBar(
-        title: const Text(
-          "Order Details 📦",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 1,
-        centerTitle: true,
-      ),
+appBar: AppBar(
+  leading: IconButton(
+    icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+    onPressed: () => Navigator.pop(context),
+  ),
+  title: const Text(
+    "Order Details 📦",
+    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+  ),
+  backgroundColor: Colors.white,
+  elevation: 1,
+  centerTitle: true,
+),
+
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : order == null
-              ? const Center(child: Text("Order details not found ❌"))
+              ? const Center(child: Text("Order not found ❌"))
               : RefreshIndicator(
                   onRefresh: _loadOrderDetails,
                   child: SingleChildScrollView(
@@ -173,207 +96,104 @@ Future<void> _openReviewDialog(int productId) async {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // 🆔 Order ID & Date
+                          // -----------------------
+                          // ORDER HEADER
+                          // -----------------------
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 "Order #${order['orderId']}",
                                 style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.deepPurple),
+                                  color: Colors.deepPurple,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Text(
-                                (order['createdAt'] ?? '')
+                                (order['createdAt'] ?? "")
                                     .toString()
                                     .substring(0, 10),
                                 style: const TextStyle(color: Colors.grey),
-                              ),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 10),
 
-                          // 📦 Order Status
+                          const SizedBox(height: 12),
                           _buildOrderTracker(order['orderStatus'] ?? "Pending"),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 22),
 
-                          // 🛍️ Items List
+                          // -----------------------
+                          // ITEMS – EACH IS A MINI ORDER
+                          // -----------------------
                           const Text(
                             "Ordered Items",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 10),
-                          ..._buildItems(order['items'] ?? []),
 
-                          const Divider(height: 30, thickness: 1),
+                          ..._buildItemCards(order['items'] ?? []),
 
-                          // 💳 Payment Summary
-                          const Text(
-                            "Payment & Summary",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 8),
+                          const Divider(height: 32),
+
+                          // -----------------------
+                          // PAYMENT SUMMARY
+                          // -----------------------
+                          const Text("Payment & Summary",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 10),
+
                           _buildSummaryRow("Payment Method",
                               order['paymentMethod'] ?? "N/A"),
                           _buildSummaryRow(
                               "Order Status", order['orderStatus'] ?? "N/A"),
-                              _buildSummaryRow("Delivery Charge", "₹49"),
-                         _buildSummaryRow("Total Amount", "₹${(order['totalAmount'] ?? 0) + 49}"),
+
                           if (order['couponCode'] != null)
                             _buildSummaryRow(
-                                "Coupon", order['couponCode'].toString()),
+                                "Coupon Used", order['couponCode']),
 
-                          const Divider(height: 30, thickness: 1),
+                          if (order['couponDiscount'] != null)
+                            _buildSummaryRow(
+                                "Coupon Discount",
+                                "-₹${order['couponDiscount']}"),
 
-                          // 🏠 Shipping Address
-                          const Text(
-                            "Shipping Address",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          _buildSummaryRow(
+                            "Total Amount Paid",
+                            "₹${order['totalAmount'].toStringAsFixed(2)}",
                           ),
+
+                          const Divider(height: 32),
+
+                          // -----------------------
+                          // SHIPPING ADDRESS
+                          // -----------------------
+                          const Text("Shipping Address",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
-                          Text(order['shippingAddress'] ?? "N/A",
-                              style: const TextStyle(
-                                  fontSize: 14, color: Colors.black87)),
-                          const SizedBox(height: 25),
-// 🧭 Item Tracking Links Section
-if ((order['items'] ?? []).isNotEmpty) ...[
-  const Divider(height: 30, thickness: 1),
-  const Text(
-    "Tracking Links",
-    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-  ),
-  const SizedBox(height: 8),
-  ...List.generate(order['items'].length, (index) {
-    final item = order['items'][index];
-    final trackingUrl = item['itemTrackingUrl'] ?? '';
+                          Text(order['shippingAddress'] ?? "N/A"),
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            item['name'] ?? 'Item ${index + 1}',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: Colors.deepPurple,
-            ),
-          ),
-          const SizedBox(height: 6),
-          GestureDetector(
-           onTap: () {
-  if (trackingUrl.isNotEmpty && trackingUrl != "Not Available") {
-    final fixedUrl = trackingUrl.startsWith("http")
-        ? trackingUrl
-        : "https://$trackingUrl"; // auto-fix missing scheme
+                          const SizedBox(height: 30),
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TrackingWebViewPage(
-          url: fixedUrl,
-          title: item['name'] ?? 'Tracking Link',
-        ),
-      ),
-    );
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Tracking link not available")),
-    );
-  }
-},
-
-            child: Text(
-              trackingUrl.isNotEmpty && trackingUrl != "Not Available"
-                  ? trackingUrl
-                  : "Not Available",
-              style: TextStyle(
-                color: trackingUrl.isNotEmpty &&
-                        trackingUrl != "Not Available"
-                    ? Colors.blue
-                    : Colors.grey,
-                decoration: trackingUrl.isNotEmpty &&
-                        trackingUrl != "Not Available"
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }),
-],
-
-// 🟦 Tracking URL Section (always shown)
-Container(
-  margin: const EdgeInsets.only(top: 16),
-  padding: const EdgeInsets.all(12),
-  decoration: BoxDecoration(
-    color: Colors.grey.shade100,
-    borderRadius: BorderRadius.circular(10),
-    border: Border.all(color: Colors.grey.shade300),
-  ),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        "Tracking URL",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-          color: Colors.black87,
-        ),
-      ),
-      const SizedBox(height: 8),
-      Text(
-        order['trackingUrl'] != null && order['trackingUrl'].isNotEmpty
-            ? order['trackingUrl']
-            : "Not Available",
-        style: TextStyle(
-          color: order['trackingUrl'] != null && order['trackingUrl'].isNotEmpty
-              ? Colors.blue
-              : Colors.grey,
-          decoration: order['trackingUrl'] != null && order['trackingUrl'].isNotEmpty
-              ? TextDecoration.underline
-              : TextDecoration.none,
-        ),
-      ),
-    ],
-  ),
-),
-
-                          const SizedBox(height: 25),
-
-                          // 🔘 Action Buttons
+                          // CANCEL BUTTON
                           if (order['orderStatus'] == "Pending")
                             Center(
                               child: ElevatedButton(
                                 onPressed: _cancelOrder,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.redAccent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 12),
+                                      horizontal: 32, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
                                 ),
                                 child: const Text(
                                   "Cancel Order",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -385,111 +205,163 @@ Container(
     );
   }
 
-  // 🛍️ Build items list
-List<Widget> _buildItems(List<dynamic> items) {
-  if (items.isEmpty) {
-    return [
-      const Text("No items found", style: TextStyle(color: Colors.grey))
-    ];
-  }
+  // ===================================================================
+  // MULTIPLE INDEPENDENT ITEM CARDS
+  // ===================================================================
+  List<Widget> _buildItemCards(List<dynamic> items) {
+    return items.map((item) {
+      final qty = item['quantity'] ?? 1;
+      final finalAmount = (item['finalAmount'] ?? 0).toDouble();
+      final delivery = (item['deliveryCharge'] ?? 0).toDouble();
+      final couponShare = (item['couponShare'] ?? 0).toDouble();
 
-  return items.map((item) {
-    final imageUrl = (item['imageUrls'] != null &&
-            (item['imageUrls'] as List).isNotEmpty)
-        ? item['imageUrls'][0]
-        : "https://via.placeholder.com/150";
+      final product =
+          OnesolutionModel().getById(int.tryParse(item["productId"].toString()) ?? 0);
 
-    final productId = item['productId']; // VERY IMPORTANT
-    final orderStatus = orderDetails?['orderStatus'] ?? "";
+      final eta = DateTime.now().add(const Duration(days: 4));
+      final etaText = "${eta.day}/${eta.month}/${eta.year}";
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.deepPurple.withOpacity(0.05),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
+      final imageUrl = (item['imageUrls'] != null &&
+              (item['imageUrls'] as List).isNotEmpty)
+          ? item['imageUrls'][0]
+          : "https://i.imgur.com/5ZQpZKK.jpeg";
+
+      return Card(
+        margin: const EdgeInsets.only(bottom: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              GestureDetector(
+                onTap: () {
+                  if (product != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => HomeDetailFullPage(
+                          onesolution: product,
+                          heroTag: product.id.toString(),
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Row(
                   children: [
-                    Text(item['name'] ?? "Product",
-                        style: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 4),
-                    Text("Qty: ${item['quantity'] ?? 1}"),
-                    const SizedBox(height: 2),
-                    Text("₹${item['price'] ?? 0.0}",
-                        style: const TextStyle(
-                            color: Colors.deepPurple,
-                            fontWeight: FontWeight.w600)),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(imageUrl,
+                          width: 80, height: 80, fit: BoxFit.cover),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(item['name'] ?? "Product",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
+                          const SizedBox(height: 4),
+                          Text("Qty: $qty", style: const TextStyle(color: Colors.grey)),
+                          const SizedBox(height: 6),
+                          Text("Delivery: ₹${delivery.toStringAsFixed(2)}"),
+                          if (couponShare > 0)
+                            Text(
+                              "Coupon Savings: -₹${couponShare.toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13),
+                            ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              const Icon(Icons.local_shipping,
+                                  size: 18, color: Colors.deepPurple),
+                              const SizedBox(width: 5),
+                              Text("ETA: $etaText",
+                                  style: const TextStyle(
+                                      color: Colors.deepPurple,
+                                      fontWeight: FontWeight.w600)),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Text("Paid: ₹${finalAmount.toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.deepPurple)),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
+
+              const SizedBox(height: 12),
+
+              // ---------------- TRACKING ----------------
+              if (item['itemTrackingUrl'] != null &&
+                  item['itemTrackingUrl'].toString().trim().isNotEmpty)
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  icon: const Icon(Icons.location_pin, color: Colors.white),
+                  label: const Text("Track Order",
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TrackingWebViewPage(
+                          url: item['itemTrackingUrl'],
+                          title: item['name'] ?? "Tracking",
+                        ),
+                      ),
+                    );
+                  },
+                )
+              else
+                const Text("Tracking not available",
+                    style: TextStyle(color: Colors.grey)),
             ],
           ),
+        ),
+      );
+    }).toList();
+  }
 
-          // ⭐ Write Review (only if Delivered)
-          if (orderStatus == "Delivered")
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton.icon(
-                onPressed: () => _openReviewDialog(productId),
-                icon: const Icon(Icons.rate_review, color: Colors.deepPurple),
-                label: const Text(
-                  "Write a Review",
-                  style: TextStyle(color: Colors.deepPurple),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }).toList();
-}
-
-
-  // 📊 Payment summary row
+  // ===================================================================
+  // SUMMARY ROW
+  // ===================================================================
   Widget _buildSummaryRow(String title, String value) {
-    
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title,
               style: const TextStyle(
-                  color: Colors.grey, fontWeight: FontWeight.w500)),
+                  color: Colors.black54, fontWeight: FontWeight.w500)),
           Text(value,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
         ],
       ),
     );
   }
 
-  // 🚚 Order tracker widget
+  // ===================================================================
+  // ORDER STATUS TRACKER
+  // ===================================================================
   Widget _buildOrderTracker(String status) {
     final steps = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
     final activeIndex = steps.indexOf(status);
@@ -511,21 +383,20 @@ List<Widget> _buildItems(List<dynamic> items) {
                     : isActive
                         ? Colors.deepPurple
                         : Colors.grey.shade300,
-                child: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                child: const Icon(Icons.check, color: Colors.white, size: 16),
               ),
               const SizedBox(height: 4),
-              Text(step,
-                  style: TextStyle(
-                      fontSize: 11,
-                      color: isCancelled
-                          ? Colors.redAccent
-                          : isActive
-                              ? Colors.deepPurple
-                              : Colors.grey)),
+              Text(
+                step,
+                style: TextStyle(
+                  fontSize: 11,
+                  color: isCancelled
+                      ? Colors.redAccent
+                      : isActive
+                          ? Colors.deepPurple
+                          : Colors.grey,
+                ),
+              ),
             ],
           ),
         );
