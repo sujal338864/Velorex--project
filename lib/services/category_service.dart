@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:Velorex/models/category_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:one_solution/models/category_model.dart';
+
 
 class CategoryService {
- static const String baseUrl = 'http://10.248.214.36:3001/api';
+ static const String baseUrl = 'http://10.147.205.36:3001/api';
 
 
   Future<List<Category>> getCategories() async {

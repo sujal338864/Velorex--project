@@ -1,10 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-/// =======================================================
-/// ⭐ SIMPLE IN-MEMORY RATING SERVICE
-/// (Works now, no extra files. Later you can replace with real API.)
-/// =======================================================
-
 class _ProductReview {
   final String userId;
   final String userName;
@@ -21,11 +16,11 @@ class _ProductReview {
   });
 }
 class RatingService {
-  /// productId -> list of reviews
+
   static final Map<int, List<_ProductReview>> _reviewStore = {};
 
   static Future<Map<String, dynamic>> fetchSummary(int productId) async {
-    // simulate small delay
+
     await Future.delayed(const Duration(milliseconds: 120));
 
     final list = _reviewStore[productId] ?? [];
@@ -62,11 +57,11 @@ class RatingService {
  static Future<bool> submitReview({
   required int productId,
   required String userId,
-  required String userName, // ignore incoming name
+  required String userName, 
   required int rating,
   required String comment,
 }) async {
-  // Always fetch real name from profile
+
   final profileName = await fetchProfileName(userId);
 
   final review = _ProductReview(
@@ -97,7 +92,7 @@ class RatingService {
     print("❌ Error fetching profile name: $e");
   }
 
-  return "Guest User"; // fallback
+  return "Guest User"; 
 }
 
    }

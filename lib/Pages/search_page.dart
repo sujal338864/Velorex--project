@@ -1,9 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/home_detail_full_page.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/services/produc_services.dart';
+import 'package:Velorex/Pages/home_detail_full_page.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/produc_services.dart';
+
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

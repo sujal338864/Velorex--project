@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/account_page.dart';
-import 'package:one_solution/Pages/home_page.dart';
-import 'package:one_solution/Pages/cart_page.dart';
-import 'package:one_solution/Pages/categories_page.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:Velorex/Pages/account_page.dart';
+import 'package:Velorex/Pages/cart_page.dart';
+import 'package:Velorex/Pages/categories_page.dart';
+import 'package:Velorex/Pages/home_page.dart';
 
 class MainNavigationPage extends StatefulWidget {
   const MainNavigationPage({super.key});

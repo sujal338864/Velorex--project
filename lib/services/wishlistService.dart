@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:Velorex/models/onesolution.dart';
 import 'package:http/http.dart' as http;
-import 'package:one_solution/models/onesolution.dart';
+
 
 class WishlistService {
   // ✅ Base URL (update IP when backend changes)
-  static const String baseUrl = "http://10.248.214.36:3000/api/wishlist";
+  static const String baseUrl = "http://10.147.205.36:3000/api/wishlist";
 
   // ================================================================
   // 🔹 GET Wishlist

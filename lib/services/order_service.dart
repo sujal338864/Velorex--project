@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class OrderService {
-  static const String baseUrl = "http://10.248.214.36:3000/api/orders";
+  static const String baseUrl = "http://10.147.205.36:3000/api/orders";
 
   /// =============================================
   /// 🟢 CREATE ORDER (METHOD-2  → Works with 43363)

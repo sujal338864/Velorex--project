@@ -1,23 +1,34 @@
 // ignore_for_file: deprecated_member_use, unused_element
 
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:Velorex/Pages/checkout_page.dart';
+import 'package:Velorex/Pages/coupon_list_page.dart';
+import 'package:Velorex/Pages/home_detai_page.dart';
+import 'package:Velorex/Pages/home_detail_full_page.dart';
+import 'package:Velorex/Pages/saved_for_later_page.dart';
+import 'package:Velorex/models/cart_item.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/coupen_services.dart';
+import 'package:Velorex/services/saved_for_later_service.dart';
 
-import 'package:one_solution/Pages/coupon_list_page.dart';
-import 'package:one_solution/Pages/home_detai_page.dart';
+// import 'package:one_solution/Pages/coupon_list_page.dart';
+// import 'package:one_solution/Pages/home_detai_page.dart';
+// // import 'package:one_solution/Pages/home_detail_full_page.dart';
+// // import 'package:one_solution/Pages/saved_for_later_page.dart';
+// import 'package:one_solution/Pages/checkout_page.dart';
 // import 'package:one_solution/Pages/home_detail_full_page.dart';
 // import 'package:one_solution/Pages/saved_for_later_page.dart';
-import 'package:one_solution/Pages/checkout_page.dart';
-import 'package:one_solution/Pages/home_detail_full_page.dart';
-import 'package:one_solution/Pages/saved_for_later_page.dart';
 
-import 'package:one_solution/models/cart_item.dart';
-import 'package:one_solution/models/onesolution.dart';
+// import 'package:one_solution/models/cart_item.dart';
+// import 'package:one_solution/models/onesolution.dart';
 
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/coupen_services.dart';
-import 'package:one_solution/services/saved_for_later_service.dart';
+// import 'package:one_solution/services/cartService.dart';
+// import 'package:one_solution/services/coupen_services.dart';
+// import 'package:one_solution/services/saved_for_later_service.dart';
 
 class CartPage extends StatefulWidget {
   final String userId;

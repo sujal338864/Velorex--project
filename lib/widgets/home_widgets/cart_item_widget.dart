@@ -1,6 +1,6 @@
+import 'package:Velorex/models/cart.dart';
+import 'package:Velorex/models/onesolution.dart';
 import 'package:flutter/material.dart';
-import 'package:one_solution/models/cart.dart';
-import 'package:one_solution/models/onesolution.dart';
 
 class CartItemWidget extends StatelessWidget {
   final Items item;

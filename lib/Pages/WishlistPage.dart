@@ -1,11 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:Velorex/Pages/home_detail_full_page.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/wishlistService.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/wishlistService.dart';
-import 'package:one_solution/Pages/home_detail_full_page.dart'; // ✅ Import your detail page
+ // ✅ Import your detail page
 
 class WishlistPage extends StatefulWidget {
   final String userId;

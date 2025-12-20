@@ -1,6 +1,6 @@
+import 'package:Velorex/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:one_solution/services/notification_service.dart';
 
 class UserNotificationPage extends StatefulWidget {
  final String userId;

@@ -1,19 +1,21 @@
 // home_page.dart
 // ignore_for_file: unused_field, unused_local_variable, deprecated_member_use, unnecessary_null_comparison
 
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/WishlistPage.dart';
-import 'package:one_solution/Pages/home_detai_page.dart';
-import 'package:one_solution/Pages/search_page.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/models/category_model.dart';
-import 'package:one_solution/services/api_service.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/category_service.dart';
-import 'package:one_solution/services/produc_services.dart';
-import 'package:one_solution/services/wishlistService.dart';
-import 'package:one_solution/widgets/home_widgets/onesolution_image.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:Velorex/Pages/WishlistPage.dart';
+import 'package:Velorex/Pages/home_detai_page.dart';
+import 'package:Velorex/Pages/search_page.dart';
+import 'package:Velorex/models/category_model.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/api_service.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/category_service.dart';
+import 'package:Velorex/services/produc_services.dart';
+import 'package:Velorex/services/wishlistService.dart';
+import 'package:Velorex/widgets/home_widgets/onesolution_image.dart';
 
 const Color _kAccentRed = Color(0xFFC62828);
 const Color _kSoftGray = Color(0xFFF5F5F5);

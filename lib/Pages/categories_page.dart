@@ -1,9 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/models/category_model.dart';
-import 'package:one_solution/services/category_service.dart';
-import 'package:one_solution/Pages/subcategory_page.dart';
+import 'package:Velorex/Pages/subcategory_page.dart';
+import 'package:Velorex/models/category_model.dart';
+import 'package:Velorex/services/category_service.dart';
 
 class CategoryPage extends StatefulWidget {
   final String userId;

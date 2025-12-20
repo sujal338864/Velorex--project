@@ -1,8 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:Velorex/services/cartService.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:one_solution/services/cartService.dart';
+
 import '../models/onesolution.dart';
 import '../services/saved_for_later_service.dart';
 

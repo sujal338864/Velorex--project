@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'package:Velorex/models/addressModel.dart';
 import 'package:http/http.dart' as http;
-import 'package:one_solution/models/addressModel.dart';
 
 class AddressService {
   // ✅ Independent backend for addresses
-  static const String baseUrl = 'http://10.248.214.36:3000/api/address';
+  static const String baseUrl = 'http://10.147.205.36:3000/api/address';
 
   // 🔹 Fetch all addresses for a user
 

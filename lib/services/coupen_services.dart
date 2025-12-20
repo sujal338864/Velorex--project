@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class CouponService {
   // Correct base URL
-  static const String baseUrl = "http://10.248.214.36:3000/api";
+  static const String baseUrl = "http://10.147.205.36:3000/api";
 
   static Future<Map<String, dynamic>?> applyCoupon(String code) async {
     final url = Uri.parse("$baseUrl/coupons/apply/$code");

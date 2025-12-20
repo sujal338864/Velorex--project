@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 // import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://10.248.214.36:3000/api';
+  static const String baseUrl = 'http://10.147.205.36:3000/api';
 
   /// ------------------- 🖼️ POSTERS -------------------
 static Future<List<Map<String, dynamic>>> getPosters() async {

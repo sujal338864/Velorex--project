@@ -1,10 +1,12 @@
 // ignore_for_file: deprecated_member_use, unused_local_variable
 
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/home_detail_full_page.dart';
-import 'package:one_solution/Pages/tracking_webview_page.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/services/order_service.dart';
+import 'package:Velorex/Pages/home_detail_full_page.dart';
+import 'package:Velorex/Pages/tracking_webview_page.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/order_service.dart';
+
 
 class OrderDetailsPage extends StatefulWidget {
   final int orderId;

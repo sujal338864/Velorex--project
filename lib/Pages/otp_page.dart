@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/home_page.dart';
+import 'package:Velorex/Pages/home_page.dart';
+
 import '../services/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

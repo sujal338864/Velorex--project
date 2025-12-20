@@ -1,8 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:ui';
+
+import 'package:Velorex/services/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:one_solution/services/api_service.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

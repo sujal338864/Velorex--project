@@ -1,14 +1,15 @@
 // ignore_for_file: unused_local_variable
 
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/home_detail_full_page.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/models/brand_model.dart';
-import 'package:one_solution/services/api_service.dart';
-import 'package:one_solution/services/brand_service.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/widgets/home_widgets/onesolution_image.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:Velorex/Pages/home_detail_full_page.dart';
+import 'package:Velorex/models/brand_model.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/api_service.dart';
+import 'package:Velorex/services/brand_service.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/widgets/home_widgets/onesolution_image.dart';
 
 // 🔹 Global notifier to update cart badge everywhere
 ValueNotifier<int> cartCountNotifier = ValueNotifier<int>(0);
@@ -77,7 +78,7 @@ class _HomeDetailPageState extends State<HomeDetailPage>
       final brands = await service.getBrands();
 
       final matchedBrand = brands.firstWhere(
-        (b) => b.name.toLowerCase() == widget.onesolution.brand.toLowerCase(),
+        (b) => b?.name.toLowerCase() == widget.onesolution.brand.toLowerCase(),
         orElse: () =>
             brands.isNotEmpty ? brands.first : Brand(id: 0, name: 'Unknown'),
       );

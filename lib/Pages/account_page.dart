@@ -1,12 +1,19 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:one_solution/Pages/OrdersPage.dart';
-import 'package:one_solution/Pages/help_page.dart';
-import 'package:one_solution/Pages/profile_page.dart';
-import 'package:one_solution/Pages/user_notification_page.dart';
-import 'package:one_solution/main.dart';
-import 'package:one_solution/utils/routes.dart';
+// import 'package:one_solution/Pages/OrdersPage.dart';
+// import 'package:one_solution/Pages/help_page.dart';
+// import 'package:one_solution/Pages/profile_page.dart';
+// import 'package:one_solution/Pages/user_notification_page.dart';
+// import 'package:one_solution/main.dart';
+// import 'package:one_solution/utils/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:Velorex/Pages/OrdersPage.dart';
+import 'package:Velorex/Pages/help_page.dart';
+import 'package:Velorex/Pages/profile_page.dart';
+import 'package:Velorex/Pages/user_notification_page.dart';
+import 'package:Velorex/main.dart';
+import 'package:Velorex/utils/routes.dart';
 
 class AccountPage extends StatefulWidget {
   final String? userId;

@@ -1,11 +1,12 @@
 import 'dart:convert';
+
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/models/spec_models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/models/spec_models.dart';
 
 class ProductService {
-  static const String baseUrl = 'http://10.248.214.36:3001/api';
+  static const String baseUrl = 'http://10.147.205.36:3001/api';
 
   // ✅ Fetch products (with optional filters)
   static Future<List<Items>> getProducts({int? categoryId, int? subcategoryId}) async {

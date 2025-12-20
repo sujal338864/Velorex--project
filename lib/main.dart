@@ -1,18 +1,20 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/main_navigation_page.dart';
-import 'package:one_solution/Pages/profile_page.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:one_solution/widgets/theme.dart';
-import 'package:one_solution/utils/routes.dart';
-// Pages
-import 'package:one_solution/Pages/home_page.dart';
-import 'package:one_solution/Pages/login_page.dart';
-import 'package:one_solution/Pages/signup_page.dart';
-import 'package:one_solution/Pages/WishlistPage.dart';
-import 'package:one_solution/Pages/cart_page.dart';
-import 'package:one_solution/Pages/email_me_page.dart';
+import 'package:Velorex/Pages/WishlistPage.dart';
+import 'package:Velorex/Pages/cart_page.dart';
+import 'package:Velorex/Pages/email_me_page.dart';
+import 'package:Velorex/Pages/home_page.dart';
+import 'package:Velorex/Pages/login_page.dart';
+import 'package:Velorex/Pages/main_navigation_page.dart';
+import 'package:Velorex/Pages/profile_page.dart';
+import 'package:Velorex/Pages/signup_page.dart';
+import 'package:Velorex/utils/routes.dart';
+import 'package:Velorex/widgets/theme.dart';
+
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

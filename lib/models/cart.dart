@@ -1,4 +1,5 @@
-import 'package:one_solution/models/onesolution.dart';
+
+import 'package:Velorex/models/onesolution.dart';
 
 class CartModel {
   static final CartModel _singleton = CartModel._internal();

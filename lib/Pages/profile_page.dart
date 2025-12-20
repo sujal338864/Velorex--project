@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/services/profile_services.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:Velorex/services/profile_services.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userId;

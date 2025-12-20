@@ -1,11 +1,16 @@
 // ignore_for_file: deprecated_member_use, unused_element_parameter
 
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:one_solution/models/addressModel.dart';
-import 'package:one_solution/models/cart_item.dart';
-import 'package:one_solution/services/Address_services.dart';
-import 'package:one_solution/services/profile_services.dart';
+import 'package:Velorex/models/addressModel.dart';
+import 'package:Velorex/models/cart_item.dart';
+import 'package:Velorex/services/Address_services.dart';
+import 'package:Velorex/services/profile_services.dart';
+// import 'package:one_solution/models/addressModel.dart';
+// import 'package:one_solution/models/cart_item.dart';
+// import 'package:one_solution/services/Address_services.dart';
+// import 'package:one_solution/services/profile_services.dart';
 import 'payment_page.dart';
 
 class CheckoutPage extends StatefulWidget {

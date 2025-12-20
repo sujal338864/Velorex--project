@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/onesolution.dart'; // ✅ your product/item model
 
 class SavedForLaterService {
-  static const String baseUrl = "http://10.248.214.36:3000/api/savedforlater";
+  static const String baseUrl = "http://10.147.205.36:3000/api/savedforlater";
 
   // 🔹 Get saved items
   static Future<List<Items>> getSavedItems(String userId) async {

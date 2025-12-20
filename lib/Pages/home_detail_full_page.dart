@@ -2,16 +2,18 @@
 
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 // import 'package:one_solution/models/brand_model.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/models/spec_models.dart'; // 🔴 NEW
-import 'package:one_solution/services/api_service.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/produc_services.dart';
-import 'package:one_solution/widgets/home_widgets/onesolution_image.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/models/spec_models.dart';
+import 'package:Velorex/services/api_service.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/produc_services.dart';
+import 'package:Velorex/widgets/home_widgets/onesolution_image.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 const Color _kAccentRed = Color(0xFFC62828);

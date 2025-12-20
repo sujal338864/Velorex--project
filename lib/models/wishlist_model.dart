@@ -1,4 +1,8 @@
-import 'package:one_solution/models/onesolution.dart';
+
+
+
+
+import 'package:Velorex/models/onesolution.dart';
 
 class WishlistModel {
   static final WishlistModel _singleton = WishlistModel._internal();

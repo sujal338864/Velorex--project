@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:Velorex/models/cart_item.dart';
+import 'package:Velorex/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:one_solution/models/cart_item.dart';
-import 'package:one_solution/services/api_service.dart';
+
 
 class CartService {
-  static const String baseUrl = "http://10.248.214.36:3000/api/cart"; // ✅ your backend base URL
+  static const String baseUrl = "http://10.147.205.36:3000/api/cart"; // ✅ your backend base URL
 
 static Future<List<CartItem>> fetchCart(String userId) async {
   final url = '$baseUrl/$userId';

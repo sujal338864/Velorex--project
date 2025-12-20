@@ -1,11 +1,12 @@
+import 'package:Velorex/Pages/home_detai_page.dart';
+import 'package:Velorex/models/cart.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/services/api_service.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/wishlistService.dart';
+import 'package:Velorex/widgets/home_widgets/onesolution_image.dart';
 import 'package:flutter/material.dart';
-import 'package:one_solution/Pages/home_detai_page.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/models/cart.dart';
-import 'package:one_solution/services/api_service.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/wishlistService.dart';
-import 'package:one_solution/widgets/home_widgets/onesolution_image.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
 class OnesolutionList extends StatefulWidget {

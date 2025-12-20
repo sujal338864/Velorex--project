@@ -1,16 +1,26 @@
 // ignore_for_file: deprecated_member_use
 
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:one_solution/models/category_model.dart';
-import 'package:one_solution/models/subcategory_model.dart';
-import 'package:one_solution/models/onesolution.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/user_subcategory_service.dart';
-import 'package:one_solution/services/produc_services.dart';
-import 'package:one_solution/Pages/home_detai_page.dart';
-import 'package:one_solution/services/wishlistService.dart';
+import 'package:Velorex/Pages/home_detai_page.dart';
+// import 'package:one_solution/models/category_model.dart';
+// import 'package:one_solution/models/subcategory_model.dart';
+// import 'package:one_solution/models/onesolution.dart';
+// import 'package:one_solution/services/cartService.dart';
+// import 'package:one_solution/services/user_subcategory_service.dart';
+// import 'package:one_solution/services/produc_services.dart';
+// import 'package:one_solution/Pages/home_detai_page.dart';
+// import 'package:one_solution/services/wishlistService.dart';
 import 'dart:math';
+
+import 'package:Velorex/models/category_model.dart';
+import 'package:Velorex/models/onesolution.dart';
+import 'package:Velorex/models/subcategory_model.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/produc_services.dart';
+import 'package:Velorex/services/user_subcategory_service.dart';
+import 'package:Velorex/services/wishlistService.dart';
 
 class SubcategoryPage extends StatefulWidget {
   final Category category;
@@ -65,7 +75,7 @@ Future<void> loadProducts(int subcategoryId) async {
 
     // Filter products that belong to selected subcategory
     final filteredProducts = allProducts
-        .where((p) => p.subcategoryId == subcategoryId)
+        .where((p) => p?.subcategoryId == subcategoryId)
         .toList();
 
     setState(() {

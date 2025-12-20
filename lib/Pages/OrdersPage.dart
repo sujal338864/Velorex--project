@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:one_solution/Pages/order_details_page.dart';
-import 'package:one_solution/services/order_service.dart';
+import 'package:Velorex/Pages/order_details_page.dart';
+import 'package:Velorex/services/order_service.dart';
+
 
 class OrdersPage extends StatefulWidget {
   final String userId;

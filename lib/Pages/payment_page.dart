@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
-import 'package:one_solution/models/cart_item.dart';
-import 'package:one_solution/services/cartService.dart';
-import 'package:one_solution/services/order_service.dart';
-import 'package:one_solution/services/payment_service.dart';
-import 'package:one_solution/Pages/OrderSuccessPage.dart';
+import 'package:Velorex/Pages/OrderSuccessPage.dart';
+import 'package:Velorex/models/cart_item.dart';
+import 'package:Velorex/services/cartService.dart';
+import 'package:Velorex/services/order_service.dart';
+import 'package:Velorex/services/payment_service.dart';
+
 
 class PaymentPage extends StatefulWidget {
   final String userId;

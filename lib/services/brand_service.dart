@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:Velorex/models/brand_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:one_solution/models/brand_model.dart';
+
 
 class BrandService {
-  static const String baseUrl = 'http://10.248.214.36:3001/api'; // your backend
+  static const String baseUrl = 'http://10.147.205.36:3001/api'; // your backend
 
   Future<List<Brand>> getBrands() async {
     final url = Uri.parse('$baseUrl/brands');
