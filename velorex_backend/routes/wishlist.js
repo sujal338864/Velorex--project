@@ -12,9 +12,9 @@ router.get("/:userId", async (req, res) => {
     const result = await pool.query(
       `
       SELECT 
-        w.id,
+        w.id AS wishlist_id,
         w.user_id,
-        p.product_id AS id,
+        p.product_id,
         p.name,
         p.description,
         p.price,
@@ -23,7 +23,7 @@ router.get("/:userId", async (req, res) => {
           SELECT STRING_AGG(pi.image_url, ',')
           FROM product_images pi
           WHERE pi.product_id = p.product_id
-        ) AS imageUrls
+        ) AS imageurls
       FROM wishlist w
       JOIN products p ON w.product_id = p.product_id
       WHERE w.user_id = $1
@@ -33,8 +33,13 @@ router.get("/:userId", async (req, res) => {
     );
 
     const products = result.rows.map(item => ({
-      ...item,
-      imageUrls: item.imageurls
+      wishlistId: item.wishlist_id,
+      id: item.product_id,
+      name: item.name,
+      description: item.description,
+      price: Number(item.price),
+      offerPrice: Number(item.offer_price),
+      images: item.imageurls
         ? item.imageurls.split(",").map(u => u.trim())
         : ["https://picsum.photos/300"]
     }));
@@ -45,6 +50,7 @@ router.get("/:userId", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch wishlist" });
   }
 });
+
 
 // ===============================
 // ADD Wishlist
