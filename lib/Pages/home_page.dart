@@ -708,6 +708,7 @@ class _HomePageState extends State<HomePage> {
                                 final poster = _posters[i];
                                 final imageUrl = (poster['image_url'] ?? '').toString();
 
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 6),

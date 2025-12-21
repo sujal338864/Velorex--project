@@ -129,31 +129,42 @@ class ProductService {
   }
 
   // 2) Get existing specs for a product
-  static Future<Map<int, String>> getProductSpecs(int productId) async {
-    final uri = Uri.parse("$baseUrl/products/spec/product/$productId");
-    final res = await http.get(uri);
+ static Future<Map<int, String>> getProductSpecs(int productId) async {
+  final uri = Uri.parse("$baseUrl/products/spec/product/$productId");
+  final res = await http.get(uri);
 
-    if (res.statusCode != 200) {
-      throw Exception('Failed to load product specs');
-    }
-
-    final List<dynamic> decoded = jsonDecode(res.body);
-    final result = <int, String>{};
-
-    for (final row in decoded) {
-      final map = row as Map<String, dynamic>;
-
-      final fid = map['FieldID'] ?? map['fieldId'];
-      if (fid == null) continue;
-
-      final fieldId = int.tryParse(fid.toString());
-      if (fieldId == null) continue;
-
-      result[fieldId] = (map['Value'] ?? '').toString();
-    }
-
-    return result;
+  if (res.statusCode != 200) {
+    throw Exception('Failed to load product specs');
   }
+
+  final List<dynamic> decoded = jsonDecode(res.body);
+  final result = <int, String>{};
+
+  for (final row in decoded) {
+    if (row == null) continue;
+    final map = row as Map<String, dynamic>;
+
+    final rawId =
+        map['field_id'] ??
+        map['FieldID'] ??
+        map['fieldId'];
+
+    if (rawId == null) continue;
+
+    final fieldId = int.tryParse(rawId.toString());
+    if (fieldId == null) continue;
+
+    final value =
+        map['value'] ??
+        map['Value'] ??
+        map['spec_value'] ??
+        '';
+
+    result[fieldId] = value.toString();
+  }
+
+  return result;
+}
 
   // 3) Save product specs
   static Future<bool> saveProductSpecs({

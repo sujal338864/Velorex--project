@@ -15,26 +15,28 @@ class SpecField {
     required this.options,
   });
 
-  factory SpecField.fromJson(Map<String, dynamic> json) {
-    final rawOptions = json['Options'] ?? json['options'];
-    final List<String> opts = rawOptions == null
-        ? <String>[]
-        : rawOptions
-            .toString()
-            .split(',')
-            .map((e) => e.trim())
-            .where((e) => e.isNotEmpty)
-            .toList();
+factory SpecField.fromJson(Map<String, dynamic> json) {
+  final rawOptions = json['options'] ?? json['Options'];
 
-    return SpecField(
-      fieldId: json['FieldID'] ?? json['fieldId'],
-      sectionId: json['SectionID'] ?? json['sectionId'],
-      name: (json['Name'] ?? json['name'] ?? '').toString(),
-      inputType: (json['InputType'] ?? json['inputType'] ?? 'text').toString(),
-      sortOrder: json['SortOrder'] ?? json['sortOrder'] ?? 0,
-      options: opts,
-    );
-  }
+  final List<String> opts = rawOptions == null
+      ? <String>[]
+      : rawOptions
+          .toString()
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
+
+  return SpecField(
+    fieldId: json['field_id'] ?? json['FieldID'] ?? json['fieldId'],
+    sectionId: json['section_id'] ?? json['SectionID'] ?? json['sectionId'],
+    name: (json['name'] ?? json['Name'] ?? '').toString(),
+    inputType: (json['input_type'] ?? json['InputType'] ?? 'text').toString(),
+    sortOrder: json['sort_order'] ?? json['SortOrder'] ?? 0,
+    options: opts,
+  );
+}
+
 }
 
 class SpecSection {
@@ -50,15 +52,18 @@ class SpecSection {
     required this.fields,
   });
 
-  factory SpecSection.fromJson(Map<String, dynamic> json) {
-    final fieldsJson = (json['fields'] ?? []) as List<dynamic>;
-    return SpecSection(
-      sectionId: json['SectionID'] ?? json['sectionId'],
-      name: (json['Name'] ?? json['name'] ?? '').toString(),
-      sortOrder: json['SortOrder'] ?? json['sortOrder'] ?? 0,
-      fields: fieldsJson
-          .map((e) => SpecField.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
+factory SpecSection.fromJson(Map<String, dynamic> json) {
+  final fieldsJson = (json['fields'] ?? []) as List<dynamic>;
+
+  return SpecSection(
+    sectionId: json['section_id'] ?? json['SectionID'] ?? json['sectionId'],
+    name: (json['name'] ?? json['Name'] ?? '').toString(),
+    sortOrder: json['sort_order'] ?? json['SortOrder'] ?? 0,
+    fields: fieldsJson
+        .map((e) => SpecField.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+
 }

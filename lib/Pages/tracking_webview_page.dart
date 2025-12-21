@@ -33,7 +33,14 @@ class _TrackingWebViewPageState extends State<TrackingWebViewPage> {
       ..setNavigationDelegate(NavigationDelegate(
         onNavigationRequest: (request) => NavigationDecision.navigate,
       ))
-      ..loadRequest(Uri.parse(widget.url));
+     ..loadRequest(
+  Uri.parse(
+    widget.url.startsWith('http')
+        ? widget.url
+        : 'https://${widget.url}'
+  ),
+);
+
 
     _controller = controller;
   }

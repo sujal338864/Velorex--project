@@ -53,7 +53,7 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
       setState(() => isLoading = false);
     }
   }
-Future<void> loadProducts(int subcategoryId) async {
+ Future<void> loadProducts(int subcategoryId) async {
   setState(() {
     isLoading = true;
     selectedSubcategoryId = subcategoryId;
@@ -80,6 +80,7 @@ Future<void> loadProducts(int subcategoryId) async {
     setState(() => isLoading = false);
   }
 }
+
 
   @override
   Widget build(BuildContext context) {

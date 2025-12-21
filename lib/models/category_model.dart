@@ -34,7 +34,6 @@ factory Category.fromJson(Map<String, dynamic> json) {
 }
 }
 
-
 // class Category {
 //   final int id;
 //   final String name;
