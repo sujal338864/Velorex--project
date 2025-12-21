@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NotificationService {
-  static const String baseUrl = 'http://10.147.205.36:3001/api';
+  static const String baseUrl = 'http://https://velorex-project.onrender.com/api';
 
   static Future<List<dynamic>> getNotifications(String userId) async {
     try {

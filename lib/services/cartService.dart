@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 
 class CartService {
-  static const String baseUrl = "http://10.147.205.36:3000/api/cart"; // ✅ your backend base URL
+  static const String baseUrl = "https://velorex-project.onrender.com/api/cart"; // ✅ your backend base URL
 
 static Future<List<CartItem>> fetchCart(String userId) async {
   final url = '$baseUrl/$userId';

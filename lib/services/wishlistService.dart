@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class WishlistService {
   // ✅ Base URL (update IP when backend changes)
-  static const String baseUrl = "http://10.147.205.36:3000/api/wishlist";
+  static const String baseUrl = "https://velorex-project.onrender.com/api/wishlist";
 
   // ================================================================
   // 🔹 GET Wishlist

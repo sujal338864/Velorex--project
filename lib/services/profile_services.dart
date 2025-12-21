@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class ProfileService {
   // 🌐 Your backend base URL
-  static const String baseUrl = "http://10.147.205.36:3000/api/profile";
+  static const String baseUrl = "https://velorex-project.onrender.com/api/profile";
 
   // 🔹 Sync user (login/signup)
   static Future<String?> syncUser(String supabaseId, String email, String name) async {

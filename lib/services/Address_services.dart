@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class AddressService {
   // ✅ Independent backend for addresses
-  static const String baseUrl = 'http://10.147.205.36:3000/api/address';
+static const String baseUrl = 'https://velorex-project.onrender.com/api/address';
 
   // 🔹 Fetch all addresses for a user
 

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   // change to your backend IP or domain
-  static const baseUrl = "http://10.147.205.36:3000/api/users";
+  static const baseUrl = "https://velorex-project.onrender.com/api/users";
 
   // ✅ Signup (match backend structure)
   static Future<Map<String, dynamic>> signup({

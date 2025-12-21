@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class PaymentService {
-  static const String baseUrl = "http://10.147.205.36:3000/api";
+  static const String baseUrl = "https://velorex-project.onrender.com/api";
 
   /// ============================================================
   /// 🔵 CREATE PAYMENT ENTRY (Only for online payments)

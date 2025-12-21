@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 
 class CategoryService {
- static const String baseUrl = 'http://10.147.205.36:3001/api';
+ static const String baseUrl = 'https://velorex-admin-backend.onrender.com/api';
 
 
   Future<List<Category>> getCategories() async {

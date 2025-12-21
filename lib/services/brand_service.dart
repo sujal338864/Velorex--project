@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 
 class BrandService {
-  static const String baseUrl = 'http://10.147.205.36:3001/api'; // your backend
+ static const String baseUrl = 'https://velorex-admin-backend.onrender.com/api';
 
   Future<List<Brand>> getBrands() async {
     final url = Uri.parse('$baseUrl/brands');

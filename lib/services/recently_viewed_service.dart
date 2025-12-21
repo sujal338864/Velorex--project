@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RecentlyViewedService {
-  static const String baseUrl = "http://10.147.205.36:3000/api/recentlyviewed";
+  static const String baseUrl = "https://velorex-project.onrender.com/api/recentlyviewed";
 
   static Future<void> addViewed(String userId, int productId) async {
     await http.post(

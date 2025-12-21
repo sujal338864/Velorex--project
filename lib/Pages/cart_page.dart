@@ -15,20 +15,6 @@ import 'package:Velorex/services/cartService.dart';
 import 'package:Velorex/services/coupen_services.dart';
 import 'package:Velorex/services/saved_for_later_service.dart';
 
-// import 'package:one_solution/Pages/coupon_list_page.dart';
-// import 'package:one_solution/Pages/home_detai_page.dart';
-// // import 'package:one_solution/Pages/home_detail_full_page.dart';
-// // import 'package:one_solution/Pages/saved_for_later_page.dart';
-// import 'package:one_solution/Pages/checkout_page.dart';
-// import 'package:one_solution/Pages/home_detail_full_page.dart';
-// import 'package:one_solution/Pages/saved_for_later_page.dart';
-
-// import 'package:one_solution/models/cart_item.dart';
-// import 'package:one_solution/models/onesolution.dart';
-
-// import 'package:one_solution/services/cartService.dart';
-// import 'package:one_solution/services/coupen_services.dart';
-// import 'package:one_solution/services/saved_for_later_service.dart';
 
 class CartPage extends StatefulWidget {
   final String userId;
@@ -46,6 +32,17 @@ class _CartPageState extends State<CartPage> {
   final TextEditingController couponController = TextEditingController();
   Map<String, dynamic>? appliedCoupon;
   double couponDiscount = 0.0;
+
+double safeDouble(dynamic v) {
+  if (v == null) return 0;
+  if (v is num) return v.toDouble();
+  return double.tryParse(v.toString()) ?? 0;
+}
+
+String safeString(dynamic v) {
+  if (v == null) return "";
+  return v.toString();
+}
 
   @override
   void initState() {
@@ -107,62 +104,100 @@ Widget _etaCard() {
   // ---------------------------------------------
   // COUPON SYSTEM
   // ---------------------------------------------
+double _calculateCouponDiscount(double subtotal) {
+  if (appliedCoupon == null) return 0;
+
+  final c = appliedCoupon!;
+
+  final type = safeString(
+    c["DiscountType"] ??
+    c["discountType"] ??
+    c["discount_type"] ??
+    "fixed"
+  ).toLowerCase();
+
+  final discountValue = safeDouble(
+    c["DiscountAmount"] ??
+    c["discountAmount"] ??
+    c["discount_amount"] ??
+    c["amount"]
+  );
+
+  double discount = 0;
+
+  if (type == "fixed") {
+    discount = discountValue;
+  } else {
+    discount = subtotal * (discountValue / 100);
+  }
+
+  if (discount > subtotal) discount = subtotal;
+
+  return discount;
+}
+
 
   double _subtotal(List<CartItem> items) =>
       items.fold(0.0, (sum, i) => sum + i.offerPrice * i.quantity);
 
   String _format(double v) => "₹${v.toStringAsFixed(2)}";
 
-  Future<void> _applyCoupon(List<CartItem> items) async {
-    final String code = couponController.text.trim();
+Future<void> _applyCoupon(List<CartItem> items) async {
+  if (appliedCoupon == null) return;
 
-    if (code.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Enter coupon code")),
-      );
-      return;
-    }
+  final c = appliedCoupon!;
 
-    final coupon = await CouponService.applyCoupon(code);
+  final subtotal = _subtotal(items);
 
-    if (coupon == null) {
-      setState(() {
-        appliedCoupon = null;
-        couponDiscount = 0.0;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Invalid or expired coupon")),
-      );
-      return;
-    }
+  final code = safeString(c["Code"] ?? c["code"] ?? c["couponCode"]);
+  final minPurchase = safeDouble(
+    c["MinimumPurchase"] ??
+        c["minimum_purchase"] ??
+        c["MinAmount"] ??
+        c["min_amount"]
+  );
 
-    double subtotal = _subtotal(items);
-    double minPurchase = (coupon["MinimumPurchase"] ?? 0).toDouble();
-    if (subtotal < minPurchase) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("Minimum purchase ₹$minPurchase required"),
-            duration: const Duration(seconds: 2)),
-      );
-      return;
-    }
-
-    double discount = 0.0;
-    String type = coupon["DiscountType"].toString().toLowerCase();
-
-    if (type == "fixed") {
-      discount = (coupon["DiscountAmount"] ?? 0).toDouble();
-    } else {
-      discount = subtotal * ((coupon["DiscountAmount"] ?? 0) / 100);
-    }
-
-    if (discount > subtotal) discount = subtotal;
-
-    setState(() {
-      appliedCoupon = coupon;
-      couponDiscount = discount;
-    });
+  if (subtotal < minPurchase) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Minimum purchase ₹$minPurchase required")),
+    );
+    return;
   }
+
+  final type = safeString(
+    c["DiscountType"] ??
+        c["discountType"] ??
+        c["discount_type"] ??
+        "fixed"
+  ).toLowerCase();
+
+  final discountValue = safeDouble(
+    c["DiscountAmount"] ??
+        c["discountAmount"] ??
+        c["amount"] ??
+        c["discount_value"]
+  );
+
+  double discount = 0;
+
+  if (type == "fixed") {
+    discount = discountValue;
+  } else {
+    discount = subtotal * (discountValue / 100);
+  }
+
+  if (discount > subtotal) discount = subtotal;
+
+  setState(() {
+    couponController.text = code;
+    couponDiscount = discount;
+  });
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text("Coupon Applied: $code")),
+  );
+}
+
 
   void _removeCoupon() {
     setState(() {
@@ -171,18 +206,76 @@ Widget _etaCard() {
       couponController.clear();
     });
   }
-
   Future<void> _openCouponList(List<CartItem> items, double subtotal) async {
-    final selected = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => CouponListPage(subtotal: subtotal)),
-    );
+  final selected = await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => CouponListPage(subtotal: subtotal),
+    ),
+  );
 
-    if (selected != null) {
-      couponController.text = selected["Code"];
-      await _applyCoupon(items);
-    }
+  if (selected == null) return;
+
+  setState(() {
+    appliedCoupon = selected;
+  });
+
+  final c = selected;
+
+  final code = safeString(
+    c["Code"] ??
+    c["code"] ??
+    c["couponCode"]
+  );
+
+  final minPurchase = safeDouble(
+    c["MinimumPurchase"] ??
+    c["minimum_purchase"] ??
+    c["minPurchase"] ??
+    c["MinAmount"]
+  );
+
+  final cartSubtotal = _subtotal(items);
+
+  if (cartSubtotal < minPurchase) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Minimum ₹$minPurchase required")),
+    );
+    return;
   }
+
+  final type = safeString(
+    c["DiscountType"] ??
+    c["discountType"] ??
+    c["discount_type"] ??
+    "fixed"
+  ).toLowerCase();
+
+  final discountValue = safeDouble(
+    c["DiscountAmount"] ??
+    c["discountAmount"] ??
+    c["discount_amount"] ??   // ← ADDED
+    c["amount"]
+  );
+
+  double discount = 0;
+
+  if (type == "fixed") {
+    discount = discountValue;
+  } else {
+    discount = cartSubtotal * (discountValue / 100);
+  }
+
+  if (discount > cartSubtotal) discount = cartSubtotal;
+
+  setState(() {
+    couponDiscount = discount;
+    couponController.text = code;
+  });
+
+  ScaffoldMessenger.of(context)
+      .showSnackBar(SnackBar(content: Text("Coupon Applied: $code")));
+}
 
   // ---------------------------------------------
   // SAVE FOR LATER
@@ -472,8 +565,8 @@ Widget _cartItemTile(CartItem item) {
           final double deliveryCharge =
               subtotal > 2500 ? 0.0 : 49.0;
 
-          final double effectiveCouponDiscount =
-              couponDiscount > subtotal ? subtotal : couponDiscount;
+        final double effectiveCouponDiscount =
+    couponDiscount > 0 ? couponDiscount : _calculateCouponDiscount(subtotal);
 
           final double total =
               subtotal - effectiveCouponDiscount + deliveryCharge;
@@ -555,7 +648,13 @@ Widget _cartItemTile(CartItem item) {
                           mainAxisAlignment:
                               MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Coupon (${appliedCoupon!['Code']})"),
+                           Text("Coupon (${safeString(
+  appliedCoupon!["Code"] ??
+  appliedCoupon!["code"] ??
+  appliedCoupon!["couponCode"]
+)})"),
+
+
                             Text("-₹${effectiveCouponDiscount.toStringAsFixed(2)}",
                                 style:
                                     const TextStyle(color: Colors.green)),
