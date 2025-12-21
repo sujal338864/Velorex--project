@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../models/db");   // ✅ correct pg pool
+const pool = require("../models/db");
 
 // ===============================
 // GET Wishlist
@@ -12,7 +12,7 @@ router.get("/:userId", async (req, res) => {
     const result = await pool.query(
       `
       SELECT 
-        w.id AS wishlist_id,
+        w.wishlist_id,
         w.user_id,
         p.product_id,
         p.name,
@@ -25,9 +25,10 @@ router.get("/:userId", async (req, res) => {
             FROM product_images pi
             WHERE pi.product_id = p.product_id
           ),
-        '') AS image_urls
+        '') AS imageurls
       FROM wishlist w
-      JOIN products p ON w.product_id = p.product_id
+      JOIN products p 
+        ON w.product_id = p.product_id
       WHERE w.user_id = $1
       ORDER BY w.created_at DESC
       `,
@@ -41,17 +42,21 @@ router.get("/:userId", async (req, res) => {
       description: item.description,
       price: Number(item.price),
       offerPrice: Number(item.offer_price),
-      images: item.image_urls !== ""
-        ? item.image_urls.split(",").map(u => u.trim())
-        : ["https://picsum.photos/300"]
+      images: item.imageurls !== ""
+        ? item.imageurls.split(",").map(u => u.trim())
+        : [
+            "https://zyryndjeojrzvoubsqsg.supabase.co/storage/v1/object/public/product/default/no_image.png"
+          ]
     }));
 
     res.json(products);
+
   } catch (err) {
     console.error("❌ Wishlist fetch error:", err);
     res.status(500).json({ error: "Failed to fetch wishlist" });
   }
 });
+
 
 
 // ===============================
