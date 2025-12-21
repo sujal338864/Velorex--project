@@ -93,50 +93,48 @@ router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-const result = await pool.query(
-`
-SELECT 
-  s.id AS saved_id,
-  p.product_id,
-  p.name,
-  p.description,
-  p.price,
-  p.offer_price,
+    const result = await pool.query(
+      `
+      SELECT 
+        s.product_id AS saved_product_id,
+        p.product_id,
+        p.name,
+        p.description,
+        p.price,
+        p.offer_price,
+        COALESCE((
+          SELECT STRING_AGG(pi.image_url, ',')
+          FROM product_images pi
+          WHERE pi.product_id = p.product_id
+        ), '') AS imageurls
+      FROM saved_for_later s
+      JOIN products p 
+        ON s.product_id = p.product_id
+      WHERE s.user_id = $1
+      ORDER BY s.saved_at DESC
+      `,
+      [userId]
+    );
 
-  COALESCE((
-    SELECT STRING_AGG(pi.image_url, ',')
-    FROM product_images pi
-    WHERE pi.product_id = p.product_id
-  ), '') AS imageurls
-
-FROM saved_for_later s
-JOIN products p 
-  ON s.product_id = p.product_id
-WHERE s.user_id = $1
-`,
-[ userId ]
-);
-
-
-const savedItems = result.rows.map(item => ({
-  id: item.product_id,
-  name: item.name,
-  desc: item.description,
-  price: Number(item.price),
-  offerPrice: Number(item.offer_price),
-  images: item.imageurls
-    ? item.imageurls.split(",").map(u => u.trim())
-    : ["https://via.placeholder.com/300"]
-}));
-
+    const savedItems = result.rows.map(item => ({
+      id: item.product_id,
+      name: item.name,
+      desc: item.description,
+      price: Number(item.price),
+      offerPrice: Number(item.offer_price),
+      images: item.imageurls
+        ? item.imageurls.split(",").map(u => u.trim())
+        : ["https://via.placeholder.com/300"]
+    }));
 
     res.json(savedItems);
-  } catch (err) {
-  console.error("❌ Saved For Later FETCH ERROR:", err.message);
-  res.status(500).json({ error: err.message });
-}
 
+  } catch (err) {
+    console.error("❌ Saved For Later FETCH ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
+
 
 
 // ==========================================

@@ -2,6 +2,7 @@
 // ignore_for_file: unused_field, unused_local_variable, deprecated_member_use, unnecessary_null_comparison
 
 
+import 'package:Velorex/services/brand_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
       _categories = cats;
 
       // Load Posters
-      final posters = await ApiService.getPosters();
+      final posters = await BrandService.getPosters();
       _posters = posters;
 
       // Reset selection if current category removed
@@ -705,8 +706,8 @@ class _HomePageState extends State<HomePage> {
                               onPageChanged: (idx) => _posterIndex = idx,
                               itemBuilder: (context, i) {
                                 final poster = _posters[i];
-                                final imageUrl =
-                                    (poster['imageUrl'] ?? '').toString();
+                                final imageUrl = (poster['image_url'] ?? '').toString();
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 6),

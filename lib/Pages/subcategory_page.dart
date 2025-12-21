@@ -4,16 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:Velorex/Pages/home_detai_page.dart';
-// import 'package:one_solution/models/category_model.dart';
-// import 'package:one_solution/models/subcategory_model.dart';
-// import 'package:one_solution/models/onesolution.dart';
-// import 'package:one_solution/services/cartService.dart';
-// import 'package:one_solution/services/user_subcategory_service.dart';
-// import 'package:one_solution/services/produc_services.dart';
-// import 'package:one_solution/Pages/home_detai_page.dart';
-// import 'package:one_solution/services/wishlistService.dart';
 import 'dart:math';
-
 import 'package:Velorex/models/category_model.dart';
 import 'package:Velorex/models/onesolution.dart';
 import 'package:Velorex/models/subcategory_model.dart';
@@ -62,7 +53,6 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
       setState(() => isLoading = false);
     }
   }
-
 Future<void> loadProducts(int subcategoryId) async {
   setState(() {
     isLoading = true;
@@ -70,13 +60,14 @@ Future<void> loadProducts(int subcategoryId) async {
   });
 
   try {
-    // Fetch all products
+    // fetch all products (cached in your ProductService)
     final allProducts = await ProductService.getProducts();
 
-    // Filter products that belong to selected subcategory
-    final filteredProducts = allProducts
-        .where((p) => p?.subcategoryId == subcategoryId)
-        .toList();
+    // Filter only products matching subcategory
+    final filteredProducts = allProducts.where((p) {
+      return p.subcategoryId != null &&
+          p.subcategoryId == subcategoryId;
+    }).toList();
 
     setState(() {
       products = filteredProducts;

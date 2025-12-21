@@ -5,15 +5,6 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static const String baseUrl = 'https://velorex-project.onrender.com/api';
 
-  /// ------------------- 🖼️ POSTERS -------------------
-static Future<List<Map<String, dynamic>>> getPosters() async {
-  final res = await http.get(Uri.parse('$baseUrl/posters'));
-  if (res.statusCode == 200) {
-    final List data = json.decode(res.body);
-    return data.map((e) => Map<String, dynamic>.from(e)).toList();
-  }
-  throw Exception('Failed to load posters');
-}
 
 static String getFullImageUrl(String path, {String folder = 'products'}) {
   if (path.isEmpty) return '';

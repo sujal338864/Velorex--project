@@ -33,6 +33,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   void openSubcategoryPage(Category category) {
+     print("CATEGORY ID GOING: ${category.id}");
     Navigator.push(
       context,
       MaterialPageRoute(

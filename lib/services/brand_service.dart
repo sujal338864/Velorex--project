@@ -20,4 +20,15 @@ class BrandService {
       throw Exception('Failed to load brands');
     }
   }
+
+    /// ------------------- 🖼️ POSTERS -------------------
+static Future<List<Map<String, dynamic>>> getPosters() async {
+  final res = await http.get(Uri.parse('$baseUrl/posters'));
+  if (res.statusCode == 200) {
+    final List data = json.decode(res.body);
+    return data.map((e) => Map<String, dynamic>.from(e)).toList();
+  }
+  throw Exception('Failed to load posters');
+}
+
 }

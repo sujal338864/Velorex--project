@@ -11,14 +11,15 @@ router.get("/", async (req, res) => {
     const { categoryId } = req.query;
 
     let query = `
-      SELECT
-        s.subcategory_id AS subcategory_id,
-        s.name AS name,
-        s.category_id AS category_id,
-        c.name AS category_name,
-        s.created_at AS created_at
-      FROM subcategories s
-      INNER JOIN categories c ON s.category_id = c.category_id
+      SELECT 
+  s.subcategory_id AS subcategory_id,
+  s.name AS name,
+  s.category_id AS category_id,
+  c.name AS category_name,
+  s.created_at AS created_at
+FROM subcategories s
+JOIN categories c ON s.category_id = c.category_id
+
     `;
 
     const values = [];
