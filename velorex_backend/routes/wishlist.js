@@ -19,11 +19,13 @@ router.get("/:userId", async (req, res) => {
         p.description,
         p.price,
         p.offer_price,
-        (
-          SELECT STRING_AGG(pi.image_url, ',')
-          FROM product_images pi
-          WHERE pi.product_id = p.product_id
-        ) AS imageurls
+        COALESCE(
+          (
+            SELECT STRING_AGG(pi.image_url, ',')
+            FROM product_images pi
+            WHERE pi.product_id = p.product_id
+          ),
+        '') AS image_urls
       FROM wishlist w
       JOIN products p ON w.product_id = p.product_id
       WHERE w.user_id = $1
@@ -39,8 +41,8 @@ router.get("/:userId", async (req, res) => {
       description: item.description,
       price: Number(item.price),
       offerPrice: Number(item.offer_price),
-      images: item.imageurls
-        ? item.imageurls.split(",").map(u => u.trim())
+      images: item.image_urls !== ""
+        ? item.image_urls.split(",").map(u => u.trim())
         : ["https://picsum.photos/300"]
     }));
 
